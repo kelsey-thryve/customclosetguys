@@ -62,6 +62,9 @@ def convert(html, page):
         main = re.sub(r'<div class="acc-tools">.*?<noscript>.*?</noscript>', ACCESSORIES_PHP, main, flags=re.S)
         main = re.sub(r'\s*<script src="assets/js/accessories-data.js"></script>', "", main)
 
+    # The designer URL comes from the WordPress settings (inline script), not the static config file.
+    main = re.sub(r'\s*<script src="assets/js/config.js"></script>', "", main)
+
     # Links between pages (with optional #anchor).
     def link(m):
         f, anchor = m.group(1), m.group(2) or ""
@@ -94,7 +97,7 @@ def main():
     dst = os.path.join(THEME, "assets")
     if os.path.isdir(dst):
         shutil.rmtree(dst)
-    shutil.copytree(os.path.join(ROOT, "assets"), dst, ignore=shutil.ignore_patterns("accessories-data.js"))
+    shutil.copytree(os.path.join(ROOT, "assets"), dst, ignore=shutil.ignore_patterns("accessories-data.js", "config.js"))
 
     zpath = os.path.join(ROOT, "wordpress", "ccg-theme.zip")
     with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:

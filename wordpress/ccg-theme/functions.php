@@ -33,6 +33,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	$js  = get_theme_file_path( 'assets/js/site.js' );
 	wp_enqueue_style( 'ccg-site', get_theme_file_uri( 'assets/css/site.css' ), array( 'ccg-fonts' ), file_exists( $css ) ? filemtime( $css ) : CCG_VERSION );
 	wp_enqueue_script( 'ccg-site', get_theme_file_uri( 'assets/js/site.js' ), array(), file_exists( $js ) ? filemtime( $js ) : CCG_VERSION, true );
+	wp_add_inline_script( 'ccg-site', 'window.CCG_DESIGNER_URL = ' . wp_json_encode( (string) ccg_setting( 'designer_url' ) ) . ';', 'before' );
 } );
 
 add_filter( 'wp_resource_hints', function ( $urls, $relation ) {

@@ -11,6 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function ccg_setting_defaults() {
 	return array(
 		'enquiry_email' => get_option( 'admin_email' ),
+		'designer_url'  => '',
 		'hours'         => '',
 		'test_mode'     => 1,
 		'login_lock'    => 0,
@@ -29,6 +30,7 @@ add_action( 'admin_init', function () {
 			$in = (array) $in;
 			return array(
 				'enquiry_email' => sanitize_email( isset( $in['enquiry_email'] ) ? $in['enquiry_email'] : '' ),
+				'designer_url'  => esc_url_raw( isset( $in['designer_url'] ) ? trim( $in['designer_url'] ) : '' ),
 				'hours'         => sanitize_text_field( isset( $in['hours'] ) ? $in['hours'] : '' ),
 				'test_mode'     => empty( $in['test_mode'] ) ? 0 : 1,
 				'login_lock'    => empty( $in['login_lock'] ) ? 0 : 1,
@@ -55,6 +57,9 @@ function ccg_settings_page() {
 				<tr><th scope="row"><label for="ccg-email">Send enquiries to</label></th>
 					<td><input id="ccg-email" class="regular-text" type="email" name="ccg_settings[enquiry_email]" value="<?php echo esc_attr( $s['enquiry_email'] ); ?>">
 					<p class="description">Consultation requests are emailed here and also saved under <strong>Enquiries</strong> in the sidebar.</p></td></tr>
+				<tr><th scope="row"><label for="ccg-designer">Designer app URL</label></th>
+					<td><input id="ccg-designer" class="regular-text" type="url" name="ccg_settings[designer_url]" value="<?php echo esc_attr( $s['designer_url'] ); ?>" placeholder="https://your-designer.vercel.app">
+					<p class="description">The Custom Closet Guys deployment of the closet designer. While empty, the Design page shows the concept preview.</p></td></tr>
 				<tr><th scope="row"><label for="ccg-hours">Business hours</label></th>
 					<td><input id="ccg-hours" class="regular-text" type="text" name="ccg_settings[hours]" value="<?php echo esc_attr( $s['hours'] ); ?>" placeholder="Mon to Fri, 8am to 5pm"></td></tr>
 				<tr><th scope="row">Test mode</th>

@@ -27,7 +27,7 @@ Gold `[bracket]` tags on the pages mark content still needed:
 - Business hours.
 - Confirm the cabinetry room type and garage cabinet color count.
 - Typical build timeline (FAQ).
-- Connect the live AI designer in the studio panel and wire the forms to email / WordPress.
+- Deploy the Custom Closet Guys designer (wardrobe-app with `NEXT_PUBLIC_CLIENT=ccg`) and set its URL (see below).
 
 ## WordPress theme (for testing and launch)
 
@@ -53,6 +53,13 @@ On the live site: upload and activate the theme, run **Import starter content**,
 ### Editing the design
 
 The static pages are the design source. After changing them, run `python3 tools/build-wp-theme.py` to regenerate the theme templates and the zip. Theme logic lives in `wordpress/ccg-theme/functions.php` and `wordpress/ccg-theme/inc/`.
+
+## The closet designer
+
+The Design page loads the live designer (the wardrobe-app repo, deployed with `NEXT_PUBLIC_CLIENT=ccg`) in a frame that resizes to fit. Until its URL is set, the page shows the concept preview.
+
+- Static preview: put the URL in `assets/js/config.js`.
+- WordPress: Settings → Custom Closet Guys → Designer app URL.
 
 ## Preview locally
 

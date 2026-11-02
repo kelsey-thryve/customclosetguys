@@ -12,7 +12,7 @@ get_header(); ?>
 </section>
 
 <section class="section" id="designer">
-  <div class="wrap">
+  <div class="wrap" data-designer>
 
     <div class="steps-pills" data-pills data-space>
       <span class="lbl">Which space?</span>
