@@ -88,7 +88,7 @@ def convert(html, page):
 
 def main():
     for page, (tpl, _) in PAGES.items():
-        with open(os.path.join(ROOT, page), encoding="utf-8") as f:
+        with open(os.path.join(ROOT, "public", page), encoding="utf-8") as f:
             php = convert(f.read(), page)
         with open(os.path.join(THEME, tpl), "w", encoding="utf-8") as f:
             f.write(php)
@@ -97,7 +97,7 @@ def main():
     dst = os.path.join(THEME, "assets")
     if os.path.isdir(dst):
         shutil.rmtree(dst)
-    shutil.copytree(os.path.join(ROOT, "assets"), dst, ignore=shutil.ignore_patterns("accessories-data.js", "config.js"))
+    shutil.copytree(os.path.join(ROOT, "public", "assets"), dst, ignore=shutil.ignore_patterns("accessories-data.js", "config.js"))
 
     zpath = os.path.join(ROOT, "wordpress", "ccg-theme.zip")
     with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:

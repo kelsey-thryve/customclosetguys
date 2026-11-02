@@ -1,10 +1,23 @@
 # Custom Closet Guys: new website (test build)
 
-Static preview of the new customclosetguys.com, built from the approved homepage design. Every page carries a "Test site" banner and `noindex`, so search engines will not pick it up.
+The new customclosetguys.com with the closet designer built in, from the approved homepage design.
+
+## Put it online (Vercel, about 5 minutes)
+
+1. vercel.com/new → import `kelsey-thryve/customclosetguys` → **Deploy** (Next.js is detected automatically).
+2. In the new project: Settings → Environment Variables → add `GEMINI_API_KEY` (the same key the wardrobe-app project uses; copy it from that project's Environment Variables). Optional, same as wardrobe-app: `GEMINI_IMAGE_MODEL`, and `RESEND_API_KEY` + `LEAD_TO_EMAIL` + `LEAD_FROM_EMAIL` so design requests are emailed (otherwise they appear in the Vercel logs).
+3. Deployments → latest → Redeploy, so the key is picked up. The project URL is the link to send.
+
+## How it fits together
+
+- `public/`: the website pages (plain HTML) and assets.
+- `app/designer/`: the closet designer (a copy of the wardrobe-app, in Custom Closet Guys mode: closet or garage, inches, his depths, his branding). It runs at `/designer` and is shown inside the Design page.
+- `app/api/`: the designer's server side (render, chat, lead). The Gemini key stays on the server.
+- `lib/client.js`: the designer's Custom Closet Guys settings (wording, chips, consultant questions, depth rules). Every page carries a "Test site" banner and `noindex`, so search engines will not pick it up.
 
 ## Pages
 
-| File | Page |
+| File (in `public/`) | Page |
 | --- | --- |
 | `index.html` | Home: hero, design studio preview, what we build, getting started, recent work, reviews, consultation form |
 | `design.html` | Design yours: closet or garage pre-screen, studio panel (AI designer loads here), standard build depths, L-shaped room fallback |
@@ -16,7 +29,7 @@ Static preview of the new customclosetguys.com, built from the approved homepage
 
 ## Editing the accessories
 
-All products live in `assets/js/accessories-data.js`. Each entry has a category, name, short note, image and Amazon link. Add, remove or reorder entries there; the page builds itself from that list. Links keep the existing Amazon Associates tag.
+All products live in `public/assets/js/accessories-data.js`. Each entry has a category, name, short note, image and Amazon link. Add, remove or reorder entries there; the page builds itself from that list. Links keep the existing Amazon Associates tag.
 
 ## Still to do before launch
 
@@ -27,7 +40,6 @@ Gold `[bracket]` tags on the pages mark content still needed:
 - Business hours.
 - Confirm the cabinetry room type and garage cabinet color count.
 - Typical build timeline (FAQ).
-- Deploy the Custom Closet Guys designer (wardrobe-app with `NEXT_PUBLIC_CLIENT=ccg`) and set its URL (see below).
 
 ## WordPress theme (for testing and launch)
 
@@ -52,15 +64,14 @@ On the live site: upload and activate the theme, run **Import starter content**,
 
 ### Editing the design
 
-The static pages are the design source. After changing them, run `python3 tools/build-wp-theme.py` to regenerate the theme templates and the zip. Theme logic lives in `wordpress/ccg-theme/functions.php` and `wordpress/ccg-theme/inc/`.
+The pages in `public/` are the design source. After changing them, run `python3 tools/build-wp-theme.py` to regenerate the theme templates and the zip. Theme logic lives in `wordpress/ccg-theme/functions.php` and `wordpress/ccg-theme/inc/`.
 
 ## The closet designer
 
-The Design page loads the live designer (the wardrobe-app repo, deployed with `NEXT_PUBLIC_CLIENT=ccg`) in a frame that resizes to fit. Until its URL is set, the page shows the concept preview.
+The Design page shows the designer from `/designer` in a frame that resizes to fit (set in `public/assets/js/config.js`).
 
-- Static preview: put the URL in `assets/js/config.js`.
-- WordPress: Settings → Custom Closet Guys → Designer app URL.
+- WordPress: Settings → Custom Closet Guys → Designer app URL (the Vercel URL + `/designer`).
 
-## Preview locally
+## Run locally
 
-Open `index.html` in a browser. No build step.
+`npm install`, put `GEMINI_API_KEY=...` in `.env.local`, then `npm run dev` and open http://localhost:3000.
