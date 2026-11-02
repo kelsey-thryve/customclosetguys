@@ -489,6 +489,13 @@ export default function Page() {
           </div>
         )}
 
+        {stage === "intake" && client.consultLink && (
+          <p className="consult">
+            {client.consultLink.text}{" "}
+            <a href={client.consultLink.href} target="_top">{client.consultLink.label} →</a>
+          </p>
+        )}
+
         {stage === "design" && (
           <>
             <div className="panel grid">

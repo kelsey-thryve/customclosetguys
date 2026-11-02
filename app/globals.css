@@ -167,3 +167,5 @@ input.field { width:100%; border:1px solid var(--line); background:#FBF8F2; bord
 .wrap[data-client="ccg"] .cta.brass { color:#111111; }
 .wrap[data-client="ccg"] .cta.brass:hover { background:#E5B53F; }
 .wrap[data-client="ccg"] .done .tick { color:var(--brass); }
+.consult { margin:14px 0 0; font-size:14px; color:var(--muted); }
+.consult a { color:var(--ink); font-weight:600; text-decoration:none; border-bottom:2px solid var(--brass); white-space:nowrap; }
