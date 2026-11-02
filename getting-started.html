@@ -94,12 +94,13 @@
     </div>
     <div>
       <form class="form-grid" data-demo>
-        <div><label for="cf-name">Name</label><input id="cf-name" type="text" autocomplete="name" required></div>
-        <div><label for="cf-phone">Phone</label><input id="cf-phone" type="tel" autocomplete="tel" required></div>
-        <div class="full"><label for="cf-email">Email</label><input id="cf-email" type="email" autocomplete="email"></div>
+        <div><label for="cf-name">Name</label><input id="cf-name" name="name" type="text" autocomplete="name" required></div>
+        <div><label for="cf-phone">Phone</label><input id="cf-phone" name="phone" type="tel" autocomplete="tel" required></div>
+        <div class="full"><label for="cf-email">Email</label><input id="cf-email" name="email" type="email" autocomplete="email"></div>
         <div class="full"><label for="cf-space">Which space?</label>
-          <select id="cf-space"><option>Walk-in closet</option><option>Smaller / reach-in closet</option><option>Mudroom or entryway</option><option>Garage</option><option>Cabinetry</option><option>Something else</option></select></div>
-        <div class="full"><label for="cf-msg">Tell us about it</label><textarea id="cf-msg" placeholder="Rough size of the space, what is not working now, any styles you like"></textarea></div>
+          <select id="cf-space" name="space"><option>Walk-in closet</option><option>Smaller / reach-in closet</option><option>Mudroom or entryway</option><option>Garage</option><option>Cabinetry</option><option>Something else</option></select></div>
+        <div class="full"><label for="cf-msg">Tell us about it</label><textarea id="cf-msg" name="message" placeholder="Rough size of the space, what is not working now, any styles you like"></textarea></div>
+        <div class="full hp" aria-hidden="true"><label for="cf-web">Leave this empty</label><input id="cf-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
         <div class="full"><button class="btn gold" type="submit">Request my consultation</button></div>
       </form>
       <div class="form-done" tabindex="-1">Thanks. On the live site this request goes straight to Richard, who will call to set up your design meeting.</div>
