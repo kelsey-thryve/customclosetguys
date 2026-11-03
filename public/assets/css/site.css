@@ -303,3 +303,13 @@ figcaption { font-size: 13px; color: var(--muted); margin-top: 8px; }
 .nav a { font-size: 14.5px; }
 @media (max-width: 1320px) and (min-width: 1141px) { .nav .tel { display: none; } }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* Header links jump to home page sections: stop below the sticky header. */
+section[id] { scroll-margin-top: 84px; }
+
+/* "See more projects" on the home page. */
+.more-work { margin-top: 28px; }
+.more-work > summary { list-style: none; cursor: pointer; }
+.more-work > summary::-webkit-details-marker { display: none; }
+.more-work[open] > summary { margin-bottom: 24px; }
+.more-work[open] > summary::after { content: " \2212"; }

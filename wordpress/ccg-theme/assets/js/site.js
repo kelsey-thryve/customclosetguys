@@ -10,6 +10,33 @@
     });
   }
 
+  // Header links to home page sections: close the mobile menu after a tap.
+  if (nav) {
+    nav.addEventListener('click', function (e) {
+      if (e.target.closest('a')) { nav.classList.remove('open'); if (toggle) toggle.setAttribute('aria-expanded', 'false'); }
+    });
+  }
+
+  // Arriving from another page on a #section link: land on the section again once fonts and
+  // images have loaded, since they push it down after the browser's first jump.
+  if (location.hash && /^#[\w-]+$/.test(location.hash)) {
+    var userMoved = false;
+    ['wheel', 'touchstart', 'keydown'].forEach(function (ev) {
+      window.addEventListener(ev, function () { userMoved = true; }, { once: true, passive: true });
+    });
+    var landOnHash = function () {
+      if (userMoved) return; // never pull the page away from someone already scrolling
+      var el = document.getElementById(location.hash.slice(1));
+      if (el) el.scrollIntoView();
+    };
+    window.addEventListener('load', function () {
+      landOnHash();
+      setTimeout(landOnHash, 400);
+      setTimeout(landOnHash, 1200);
+    });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(landOnHash);
+  }
+
   // Toggle chips (feature picks in the studio preview)
   document.querySelectorAll('[data-chips] .chip').forEach(function (chip) {
     chip.addEventListener('click', function () {

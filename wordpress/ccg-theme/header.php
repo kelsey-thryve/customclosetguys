@@ -16,9 +16,9 @@
     <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
     <nav class="nav" id="site-nav" aria-label="Main">
       <a href="<?php echo ccg_url( 'design' ); ?>"<?php echo ccg_current( 'design' ); ?>>Design yours</a>
-      <a href="<?php echo ccg_url( 'what-we-build' ); ?>"<?php echo ccg_current( 'what-we-build' ); ?>>What we build</a>
-      <a href="<?php echo ccg_url( 'getting-started' ); ?>"<?php echo ccg_current( 'getting-started' ); ?>>Getting started</a>
-      <a href="<?php echo ccg_url( 'gallery' ); ?>"<?php echo ccg_current( 'gallery' ); ?>>Our work</a>
+      <a href="<?php echo ccg_url(); ?>#services">What we build</a>
+      <a href="<?php echo ccg_url(); ?>#process">Getting started</a>
+      <a href="<?php echo ccg_url(); ?>#work">Our work</a>
       <a href="<?php echo ccg_url( 'accessories' ); ?>"<?php echo ccg_current( 'accessories' ); ?>>Accessories</a>
       <a href="<?php echo ccg_url( 'contact' ); ?>"<?php echo ccg_current( 'contact' ); ?>>Contact</a>
       <a class="tel" href="tel:+15055461788">(505) 546-1788</a>

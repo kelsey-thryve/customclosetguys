@@ -18,9 +18,6 @@ THEME = os.path.join(ROOT, "wordpress", "ccg-theme")
 PAGES = {
     "index.html": ("front-page.php", ""),
     "design.html": ("page-design.php", "design"),
-    "what-we-build.html": ("page-what-we-build.php", "what-we-build"),
-    "getting-started.html": ("page-getting-started.php", "getting-started"),
-    "gallery.html": ("page-gallery.php", "gallery"),
     "accessories.html": ("page-accessories.php", "accessories"),
     "contact.html": ("page-contact.php", "contact"),
 }

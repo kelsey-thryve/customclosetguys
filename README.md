@@ -19,13 +19,12 @@ The new customclosetguys.com with the closet designer built in, from the approve
 
 | File (in `public/`) | Page |
 | --- | --- |
-| `index.html` | Home: hero, design studio preview, what we build, getting started, recent work, reviews, consultation form |
-| `design.html` | Design yours: closet or garage pre-screen, studio panel (AI designer loads here), standard build depths, L-shaped room fallback |
-| `what-we-build.html` | Walk-ins, smaller closets, mudrooms, garages, cabinetry |
-| `getting-started.html` | The 5-step process, design prep, FAQ |
-| `gallery.html` | Filterable photo gallery with lightbox |
+| `index.html` | Home: hero, design studio preview, what we build (`#services`), getting started (`#process`), our work with "See more projects" (`#work`), reviews, consultation form |
+| `design.html` | Design yours: the closet designer, standard build depths, garage, L-shaped room fallback |
 | `accessories.html` | Amazon accessory picks, grouped by category (carried over from the current site) |
 | `contact.html` | Consultation form and contact details |
+
+The header's "What we build", "Getting started" and "Our work" jump to those home page sections. Old addresses (`/gallery`, `/getting-started`, `/what-we-build`, including the current site's `/gallery/` and `/getting-started/`) redirect to the matching section.
 
 ## Editing the accessories
 
@@ -39,7 +38,6 @@ Gold `[bracket]` tags on the pages mark content still needed:
 - Real reviews, rating and review count.
 - Business hours.
 - Confirm the cabinetry room type and garage cabinet color count.
-- Typical build timeline (FAQ).
 
 ## WordPress theme (for testing and launch)
 

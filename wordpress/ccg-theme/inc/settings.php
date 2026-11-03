@@ -74,7 +74,7 @@ function ccg_settings_page() {
 
 		<hr>
 		<h2>Starter content</h2>
-		<p>Creates the site's pages (Home, Design, What we build, Getting started, Gallery, Accessories, Contact), sets Home as the front page and imports the 44 Amazon accessories with their photos. Safe to run more than once: existing pages and products are kept, not duplicated.</p>
+		<p>Creates the site's pages (Home, Design, Accessories, Contact), sets Home as the front page and imports the 44 Amazon accessories with their photos. Safe to run more than once: existing pages and products are kept, not duplicated.</p>
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 			<input type="hidden" name="action" value="ccg_setup_content">
 			<?php wp_nonce_field( 'ccg_setup_content' ); ?>

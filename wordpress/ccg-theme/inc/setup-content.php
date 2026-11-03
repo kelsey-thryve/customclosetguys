@@ -10,17 +10,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function ccg_pages() {
-	// Slugs match the current site's URLs (/gallery/, /accessories/, /getting-started/) so old links keep working.
+	// What we build, Getting started and Our work are sections of the home page (see the redirect below).
 	return array(
-		'home'            => 'Home',
-		'design'          => 'Design your closet',
-		'what-we-build'   => 'What we build',
-		'getting-started' => 'Getting started',
-		'gallery'         => 'Gallery',
-		'accessories'     => 'Accessories',
-		'contact'         => 'Contact',
+		'home'        => 'Home',
+		'design'      => 'Design your closet',
+		'accessories' => 'Accessories',
+		'contact'     => 'Contact',
 	);
 }
+
+/**
+ * Old page addresses (including the current site's /gallery/ and /getting-started/) go to the
+ * matching section of the home page. Runs only when WordPress has no page at that address.
+ */
+add_action( 'template_redirect', function () {
+	if ( ! is_404() ) {
+		return;
+	}
+	$map  = array(
+		'gallery'         => 'work',
+		'our-work'        => 'work',
+		'getting-started' => 'process',
+		'what-we-build'   => 'services',
+	);
+	$path = trim( (string) wp_parse_url( isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '', PHP_URL_PATH ), '/' ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+	$slug = basename( $path );
+	if ( isset( $map[ $slug ] ) ) {
+		wp_safe_redirect( home_url( '/' ) . '#' . $map[ $slug ], 301 );
+		exit;
+	}
+} );
 
 add_action( 'admin_post_ccg_setup_content', function () {
 	if ( ! current_user_can( 'manage_options' ) ) {

@@ -130,9 +130,29 @@ get_header(); ?>
       <figure><img src="<?php echo ccg_asset( 'img/work/mudroom-pine-bench.jpg' ); ?>" alt="Pine mudroom bench with hooks and drawers"><figcaption>Mudroom bench with hooks and drawers</figcaption></figure>
       <figure><img src="<?php echo ccg_asset( 'img/work/walkin-mid-build.jpg' ); ?>" alt="Walk-in closet shelving mid-build under a chandelier"><figcaption>Mid-build</figcaption></figure>
     </div>
-    <p style="margin-top:28px"><a class="btn" href="<?php echo ccg_url( 'gallery' ); ?>">See the full gallery</a></p>
+    <details class="more-work">
+      <summary class="btn">See more projects</summary>
+      <div class="masonry" data-gallery>
+        <figure><button type="button" aria-label="Enlarge: Walk-in with open bag shelving"><img src="<?php echo ccg_asset( 'img/work/walkin-real-bags.jpg' ); ?>" alt="Walk-in with open bag shelving" loading="lazy"></button><figcaption>Walk-in with open bag shelving</figcaption></figure>
+        <figure><button type="button" aria-label="Enlarge: Lit reach-in with shoe tower"><img src="<?php echo ccg_asset( 'img/work/reach-in-lit.jpg' ); ?>" alt="Lit reach-in with shoe tower" loading="lazy"></button><figcaption>Lit reach-in with shoe tower</figcaption></figure>
+        <figure><button type="button" aria-label="Enlarge: Glass-front cabinets with lighting"><img src="<?php echo ccg_asset( 'img/work/walkin-glass-doors.jpg' ); ?>" alt="Glass-front cabinets with lighting" loading="lazy"></button><figcaption>Glass-front cabinets with lighting</figcaption></figure>
+        <figure><button type="button" aria-label="Enlarge: Island walk-in under skylights"><img src="<?php echo ccg_asset( 'img/work/walkin-skylights-island.jpg' ); ?>" alt="Island walk-in under skylights" loading="lazy"></button><figcaption>Island walk-in under skylights</figcaption></figure>
+        <figure><button type="button" aria-label="Enlarge: Center drawer bank"><img src="<?php echo ccg_asset( 'img/work/closet-center-drawers.jpg' ); ?>" alt="Center drawer bank" loading="lazy"></button><figcaption>Center drawer bank</figcaption></figure>
+        <figure><button type="button" aria-label="Enlarge: Drawer bank with walnut top"><img src="<?php echo ccg_asset( 'img/work/walkin-walnut-top.jpg' ); ?>" alt="Drawer bank with walnut top" loading="lazy"></button><figcaption>Drawer bank with walnut top</figcaption></figure>
+        <figure><button type="button" aria-label="Enlarge: Walk-in with chandelier"><img src="<?php echo ccg_asset( 'img/work/walkin-chandelier.jpg' ); ?>" alt="Walk-in with chandelier" loading="lazy"></button><figcaption>Walk-in with chandelier</figcaption></figure>
+        <figure><button type="button" aria-label="Enlarge: Reach-in behind double doors"><img src="<?php echo ccg_asset( 'img/work/reach-in-doors.jpg' ); ?>" alt="Reach-in behind double doors" loading="lazy"></button><figcaption>Reach-in behind double doors</figcaption></figure>
+        <figure><button type="button" aria-label="Enlarge: Hanging, shelves and drawers"><img src="<?php echo ccg_asset( 'img/work/walkin-hanging-drawers.jpg' ); ?>" alt="Hanging, shelves and drawers" loading="lazy"></button><figcaption>Hanging, shelves and drawers</figcaption></figure>
+        <figure><button type="button" aria-label="Enlarge: Double rod reach-in"><img src="<?php echo ccg_asset( 'img/work/reach-in-double-rod.jpg' ); ?>" alt="Double rod reach-in" loading="lazy"></button><figcaption>Double rod reach-in</figcaption></figure>
+        <figure><button type="button" aria-label="Enlarge: Reach-in with drawer bank"><img src="<?php echo ccg_asset( 'img/work/reach-in-drawer-bank.jpg' ); ?>" alt="Reach-in with drawer bank" loading="lazy"></button><figcaption>Reach-in with drawer bank</figcaption></figure>
+        <figure><button type="button" aria-label="Enlarge: Center drawers and long hanging"><img src="<?php echo ccg_asset( 'img/work/walkin-center-drawers.jpg' ); ?>" alt="Center drawers and long hanging" loading="lazy"></button><figcaption>Center drawers and long hanging</figcaption></figure>
+        <figure><button type="button" aria-label="Enlarge: Shoe shelving and baskets"><img src="<?php echo ccg_asset( 'img/work/walkin-dark-frame.jpg' ); ?>" alt="Shoe shelving and baskets" loading="lazy"></button><figcaption>Shoe shelving and baskets</figcaption></figure>
+        <figure><button type="button" aria-label="Enlarge: Walk-in built around a safe"><img src="<?php echo ccg_asset( 'img/work/walkin-gun-safe.jpg' ); ?>" alt="Walk-in built around a safe" loading="lazy"></button><figcaption>Walk-in built around a safe</figcaption></figure>
+        <figure><button type="button" aria-label="Enlarge: Island walk-in with soft-close drawers"><img src="<?php echo ccg_asset( 'img/work/walkin-island-drawers.jpg' ); ?>" alt="Island walk-in with soft-close drawers" loading="lazy"></button><figcaption>Island walk-in with soft-close drawers</figcaption></figure>
+      </div>
+    </details>
   </div>
 </section>
+<div class="lightbox" role="dialog" aria-label="Photo"><button type="button">Close</button><img alt=""></div>
 
 <section class="section mist" id="reviews">
   <div class="wrap">

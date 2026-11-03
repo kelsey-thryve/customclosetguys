@@ -44,7 +44,7 @@ get_header(); ?>
         <li>We measure up and talk through what you store and how you use the space</li>
         <li>You get a fully customized design to review before anything is built</li>
       </ul>
-      <p style="margin-top:24px"><a class="link-arrow" href="<?php echo ccg_url( 'getting-started' ); ?>">See the full process</a></p>
+      <p style="margin-top:24px"><a class="link-arrow" href="<?php echo ccg_url( '' ); ?>#process">See the full process</a></p>
     </div>
   </div>
 </section>
