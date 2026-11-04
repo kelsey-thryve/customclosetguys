@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import Elevation from "./Elevation";
 import { drawUnwarped, drawWarped } from "../../lib/warp";
-import { client, toMm, fmtLen } from "../../lib/client";
+import { client, toMm, fmtLen, ftInToMm, fmtFtIn } from "../../lib/client";
 
 const MAX_PHOTOS = 5;
 const RENDER_EXTRA_PHOTOS = 2; // extra views sent with a render; keeps the request under the host's size limit
@@ -111,7 +111,21 @@ const wallCut = async (roomSrc, wall, plan, max = 1280) => {
 const faceOnWalls = (walls) => walls.map((w, i) => (/back/i.test(w.name) ? null : `w${i}`)).filter(Boolean);
 
 const INCH = client.units === "in";
-const DIM_HINT = INCH ? { width: "e.g. 96", ceiling: "e.g. 8'", depth: "e.g. 72" } : { width: "e.g. 2400", ceiling: "e.g. 2400", depth: "e.g. 1800" };
+const DIM_HINT = INCH ? { width: ["8", "0"], ceiling: ["8", "0"], depth: ["6", "0"] } : { width: "e.g. 2400", ceiling: "e.g. 2400", depth: "e.g. 1800" };
+const lenMm = (v) => (INCH ? ftInToMm(v) : toMm(v));
+
+// One measurement: two boxes (feet, inches) for inch clients, one mm box otherwise.
+function LenInput({ label, hint, value, onChange }) {
+  if (!INCH) return <input inputMode="decimal" aria-label={label} placeholder={hint} value={value || ""} onChange={(e) => onChange(e.target.value)} />;
+  const v = value || {};
+  const set = (k) => (e) => onChange({ ...v, [k]: e.target.value.replace(/[^\d.]/g, "") });
+  return (
+    <span className="ftin">
+      <span className="unitbox"><input inputMode="numeric" aria-label={`${label}, feet`} placeholder={hint[0]} value={v.ft || ""} onChange={set("ft")} /><em>ft</em></span>
+      <span className="unitbox"><input inputMode="decimal" aria-label={`${label}, inches`} placeholder={hint[1]} value={v.in || ""} onChange={set("in")} /><em>in</em></span>
+    </span>
+  );
+}
 
 export default function Page() {
   const [photos, setPhotos] = useState([]); // first photo is the main view the render is built on
@@ -130,8 +144,8 @@ export default function Page() {
   const [views, setViews] = useState({}); // render per view id: { img, err, loading }
   const [active, setActive] = useState("main");
   const [widths, setWidths] = useState({}); // wall widths: "main", or "left" / "back" / "right"
-  const [ceiling, setCeiling] = useState("");
-  const [depth, setDepth] = useState("");
+  const [ceiling, setCeiling] = useState(INCH ? {} : "");
+  const [depth, setDepth] = useState(INCH ? {} : "");
   const [lead, setLead] = useState({ name: "", email: "", phone: "", suburb: "" });
   const [space, setSpace] = useState("closet"); // closet | garage (clients with spaces only)
   const [embed, setEmbed] = useState(false); // ?embed=1: inside another site's page, no header
@@ -209,15 +223,15 @@ export default function Page() {
     setPicked((p) => (p.includes(c) ? p.filter((x) => x !== c) : [...p, c]));
 
   const dims = () => ({
-    widths: (walkIn ? WALL_KEYS : ["main"]).map((k) => toMm(widths[k])),
-    ceiling: toMm(ceiling),
-    depth: walkIn ? toMm(depth) : null,
+    widths: (walkIn ? WALL_KEYS : ["main"]).map((k) => lenMm(widths[k])),
+    ceiling: lenMm(ceiling),
+    depth: walkIn ? lenMm(depth) : null,
   });
 
   // The AI works in mm; `shown` gives the same sentence in the client's units for the lead email.
   const measurements = (shown = false) => {
     const d = dims();
-    const L = (n) => (shown ? fmtLen(n) : `${n}mm`);
+    const L = (n) => (shown ? (INCH ? fmtFtIn(n) : fmtLen(n)) : `${n}mm`);
     const walls = walkIn
       ? d.widths.map((w, i) => (w ? `${WALL_NAMES[i].toLowerCase()} is ${L(w)} wide` : null)).filter(Boolean)
       : d.widths[0] ? [`the wall is ${L(d.widths[0])} wide`] : [];
@@ -448,21 +462,21 @@ export default function Page() {
               )}
               {photos.length > 0 && (
                 <div className="dims">
-                  <p className="lbl">Measurements ({INCH ? "inches, or feet like 8\'" : "mm"}), so the design fits your real room:</p>
+                  <p className="lbl">Measurements ({INCH ? "feet and inches" : "mm"}), so the design fits your real room:</p>
                   {(walkIn ? WALL_KEYS : ["main"]).map((k, i) => (
                     <label key={k} className="dim">
                       <span>{walkIn ? `${WALL_NAMES[i]} width (from the doorway)` : "Wall width"}</span>
-                      <input inputMode="decimal" placeholder={DIM_HINT.width} value={widths[k] || ""} onChange={(e) => setWidths((w) => ({ ...w, [k]: e.target.value }))} />
+                      <LenInput label={walkIn ? `${WALL_NAMES[i]} width` : "Wall width"} hint={DIM_HINT.width} value={widths[k]} onChange={(val) => setWidths((w) => ({ ...w, [k]: val }))} />
                     </label>
                   ))}
                   <label className="dim">
                     <span>Ceiling height</span>
-                    <input inputMode="decimal" placeholder={DIM_HINT.ceiling} value={ceiling} onChange={(e) => setCeiling(e.target.value)} />
+                    <LenInput label="Ceiling height" hint={DIM_HINT.ceiling} value={ceiling} onChange={setCeiling} />
                   </label>
                   {walkIn && (
                     <label className="dim">
                       <span>Room depth (door to back wall)</span>
-                      <input inputMode="decimal" placeholder={DIM_HINT.depth} value={depth} onChange={(e) => setDepth(e.target.value)} />
+                      <LenInput label="Room depth" hint={DIM_HINT.depth} value={depth} onChange={setDepth} />
                     </label>
                   )}
                 </div>

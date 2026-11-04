@@ -169,3 +169,9 @@ input.field { width:100%; border:1px solid var(--line); background:#FBF8F2; bord
 .wrap[data-client="ccg"] .done .tick { color:var(--brass); }
 .consult { margin:14px 0 0; font-size:14px; color:var(--muted); }
 .consult a { color:var(--ink); font-weight:600; text-decoration:none; border-bottom:2px solid var(--brass); white-space:nowrap; }
+
+/* Feet + inches boxes */
+.dim .ftin { display:flex; gap:6px; flex:none; }
+.dim .unitbox { position:relative; display:inline-flex; flex:none; }
+.dim .unitbox input { width:64px; padding-right:24px; }
+.dim .unitbox em { position:absolute; right:8px; top:50%; transform:translateY(-50%); font-style:normal; font-size:12px; color:var(--muted, #8a8172); pointer-events:none; }
