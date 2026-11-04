@@ -14,7 +14,6 @@ get_header(); ?>
         <dt>Phone</dt><dd><a href="tel:+15055461788">(505) 546-1788</a></dd>
         <dt>Email</dt><dd><a href="mailto:richard@customclosetguys.com">richard@customclosetguys.com</a></dd>
         <dt>Service area</dt><dd>Albuquerque, Santa Fe and surrounding communities</dd>
-        <dt>Hours</dt><dd><?php echo ccg_hours(); ?></dd>
       </dl>
     </div>
     <div>
@@ -46,6 +45,23 @@ get_header(); ?>
       </ul>
       <p style="margin-top:24px"><a class="link-arrow" href="<?php echo ccg_url( '' ); ?>#process">See the full process</a></p>
     </div>
+  </div>
+</section>
+
+<section class="section mist" id="projects">
+  <div class="wrap">
+    <div class="head-split">
+      <div><p class="eyebrow">Projects</p><h2>Recent work.</h2></div>
+      <p class="lede">A few recent closets and mudrooms, each designed and built for one space.</p>
+    </div>
+    <div class="work-grid">
+      <figure class="wide"><img src="<?php echo ccg_asset( 'img/work/walkin-skylights-island.jpg' ); ?>" alt="Island walk-in closet under skylights" loading="lazy"><figcaption>Island walk-in under skylights</figcaption></figure>
+      <figure><img src="<?php echo ccg_asset( 'img/work/reach-in-lit.jpg' ); ?>" alt="Lit reach-in closet with shoe tower" loading="lazy"><figcaption>Lit reach-in with shoe tower</figcaption></figure>
+      <figure><img src="<?php echo ccg_asset( 'img/work/walkin-glass-doors.jpg' ); ?>" alt="Glass-front cabinets with lighting" loading="lazy"><figcaption>Glass-front cabinets with lighting</figcaption></figure>
+      <figure><img src="<?php echo ccg_asset( 'img/work/walkin-walnut-top.jpg' ); ?>" alt="Drawer bank with walnut top" loading="lazy"><figcaption>Drawer bank with walnut top</figcaption></figure>
+      <figure><img src="<?php echo ccg_asset( 'img/work/mudroom-pine-bench.jpg' ); ?>" alt="Pine mudroom bench with hooks and drawers" loading="lazy"><figcaption>Mudroom bench with hooks and drawers</figcaption></figure>
+    </div>
+    <p style="margin-top:28px"><a class="link-arrow" href="<?php echo ccg_url( '' ); ?>#work">See more projects</a></p>
   </div>
 </section>
 <?php get_footer();

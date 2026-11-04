@@ -14,7 +14,6 @@ get_header(); ?>
     </div>
     <div>
       <div class="framed"><img src="<?php echo ccg_asset( 'img/work/walkin-real-bags.jpg' ); ?>" alt="Finished walk-in closet with open shelving for bags and double hanging"></div>
-      <dl class="spec"><dt>Project</dt><dd>Walk-in closet</dd><dt>Details</dt><dd>Open shelving for bags and shoes, double hanging, drawer bank</dd><dt>Photo</dt><dd>Custom Closet Guys project</dd></dl>
     </div>
   </div>
 </section>
@@ -78,8 +77,8 @@ get_header(); ?>
       <a class="link-arrow" href="<?php echo ccg_url( 'design' ); ?>">Design a walk-in</a>
     </article>
     <article class="svc" id="closet">
-      <img src="<?php echo ccg_asset( 'img/work/closet-center-drawers.jpg' ); ?>" alt="Smaller closets" loading="lazy">
-      <div><h3>Smaller closets</h3><p>A central drawer bank with shelving and hanging on each side, making the most of a compact closet.</p></div>
+      <img src="<?php echo ccg_asset( 'img/work/reach-in-lit.jpg' ); ?>" alt="Single-row reach-in closet with hanging, shelving and lighting" loading="lazy">
+      <div><h3>Smaller closets</h3><p>Single-row reach-in closets with hanging, shelving and shoe space, making the most of every inch behind the doors.</p></div>
       <a class="link-arrow" href="<?php echo ccg_url( 'design' ); ?>">Design a closet</a>
     </article>
     <article class="svc" id="mudroom">
@@ -88,14 +87,9 @@ get_header(); ?>
       <a class="link-arrow" href="<?php echo ccg_url( 'design' ); ?>">Design a mudroom</a>
     </article>
     <article class="svc" id="garage">
-      <div class="ph">[Garage spaces photo from Richard]</div>
+      <img src="<?php echo ccg_asset( 'img/garage-storage.jpg' ); ?>" alt="Organized garage with storage cabinets and wall-mounted tool storage" loading="lazy">
       <div><h3>Garage spaces</h3><p>Cabinets, workbenches and wall shelving that turn the garage into an organized space you actually want to use.</p></div>
       <a class="link-arrow" href="<?php echo ccg_url( 'design' ); ?>#garage">Design a garage</a>
-    </article>
-    <article class="svc" id="cabinetry">
-      <div class="ph">[Cabinetry photo from Richard]</div>
-      <div><h3>Cabinetry</h3><p>Upper and lower cabinets with countertops, as seen in our gallery. <span class="todo">[Confirm room type: laundry room?]</span></p></div>
-      <a class="link-arrow" href="<?php echo ccg_url( 'contact' ); ?>">Ask about cabinetry</a>
     </article>
   </div>
 </section>
@@ -103,15 +97,14 @@ get_header(); ?>
 <section class="section mist" id="process">
   <div class="wrap">
     <div class="head-split">
-      <div><p class="eyebrow">Getting started</p><h2>From a photo to a finished closet.</h2></div>
+      <div><p class="eyebrow">The Process</p><h2>From a photo to a finished closet.</h2></div>
       <p class="lede">It starts with a complimentary design meeting at your home, and nothing gets built until the design is right for you.</p>
     </div>
     <div class="steps">
       <div class="step"><div class="num">1</div><h3>Design meeting</h3><p>A complimentary onsite consultation to talk through your goals, take measurements and outline a plan.</p></div>
       <div class="step"><div class="num">2</div><h3>Design review</h3><p>We turn those goals into a fully customized design, weighing function, budget and added property value.</p></div>
-      <div class="step"><div class="num">3</div><h3>Design prep</h3><p>We can bring portable clothes racks and shelves so your wardrobe stays accessible during the build.</p><span class="badge">Optional</span></div>
-      <div class="step"><div class="num">4</div><h3>Build</h3><p>From sketching the design on your walls to installing hardware and accessories, our team builds your new closet.</p></div>
-      <div class="step"><div class="num">5</div><h3>Enjoy</h3><p>Save time. Live better. Shop smarter.</p></div>
+      <div class="step"><div class="num">3</div><h3>Build</h3><p>From sketching the design on your walls to installing hardware and accessories, our team builds your new closet.</p></div>
+      <div class="step"><div class="num">4</div><h3>Enjoy</h3><p>Save time. Live better. Shop smarter.</p></div>
     </div>
     <p style="margin-top:32px;font-size:15px">Want a head start? <a class="link-arrow" style="font-size:15px" href="<?php echo ccg_url( 'design' ); ?>">Design it in your room first</a> and bring the render to your design meeting.</p>
   </div>
@@ -158,12 +151,12 @@ get_header(); ?>
   <div class="wrap">
     <div class="head-split">
       <div><p class="eyebrow">Reviews</p><h2>What customers say.</h2></div>
-      <p class="rating-line"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> <span class="todo">[Rating]</span> average from <span class="todo">[number]</span> reviews</p>
+      <p class="rating-line"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.0 on Google from 18 reviews</p>
     </div>
     <div class="reviews">
-      <figure class="review"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>[Customer review. Paste a real review from Google or Facebook here.]</blockquote><cite><span class="todo">[Customer name]</span>, walk-in closet</cite></figure>
-      <figure class="review"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>[Customer review. Ideally one that mentions the design meeting or the build team.]</blockquote><cite><span class="todo">[Customer name]</span>, <span class="todo">[project]</span></cite></figure>
-      <figure class="review"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>[Customer review. A mudroom or smaller closet rounds out the set.]</blockquote><cite><span class="todo">[Customer name]</span>, <span class="todo">[project]</span></cite></figure>
+      <figure class="review"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>Custom Closet Guys were GREAT! They put shelves in a large closet for me and did the absolutely best job. They were on time, cheerful, kept a clean work area and did excellent work. Richard knew exactly what would work best for me and what I needed to store and designed a closet that works perfectly for me. They used materials that will last and not chip, sag or come apart. When they finished, they repainted the whole closet and left the area sparkling clean. They came when they had scheduled, were on time (in fact early) every day and were friendly and very careful on the job. I would recommend them without question to anyone who needs closets designed.</blockquote><cite>John Gillis, Google review</cite></figure>
+      <figure class="review"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>We are absolutely thrilled with our new closet system from Custom Closet Guys! Our designer, Cameron, was incredible. He listened to everything we wanted and created a beautiful, functional design that perfectly and aesthetically fits our space. The installation was seamless, he was professional, efficient, and left the entire area spotless, which was a huge plus. The quality is fantastic, and the entire experience, from design to finish, was top-notch and the best money we've spent. The owner, Richard, was very professional and provided a few tips to maximize the space. We highly recommend Custom Closet Guys for anyone looking to transform their space.</blockquote><cite>Renee Zamora, Google review</cite></figure>
+      <figure class="review"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>I had a great experience with Custom Closet Guys! They helped me use every inch of space to create a closet that is both functional and beautiful. Richard is great to work with and he had an excellent crew. This was a huge upgrade to our primary bedroom closets.</blockquote><cite>Michelle Villas, Google review</cite></figure>
     </div>
   </div>
 </section>
@@ -179,7 +172,6 @@ get_header(); ?>
         <dt>Phone</dt><dd><a href="tel:+15055461788">(505) 546-1788</a></dd>
         <dt>Email</dt><dd><a href="mailto:richard@customclosetguys.com">richard@customclosetguys.com</a></dd>
         <dt>Service area</dt><dd>Albuquerque, Santa Fe and surrounding communities</dd>
-        <dt>Hours</dt><dd><?php echo ccg_hours(); ?></dd>
       </dl>
     </div>
     <div>

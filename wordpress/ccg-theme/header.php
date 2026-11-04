@@ -17,7 +17,7 @@
     <nav class="nav" id="site-nav" aria-label="Main">
       <a href="<?php echo ccg_url( 'design' ); ?>"<?php echo ccg_current( 'design' ); ?>>Design yours</a>
       <a href="<?php echo ccg_url(); ?>#services">What we build</a>
-      <a href="<?php echo ccg_url(); ?>#process">Getting started</a>
+      <a href="<?php echo ccg_url(); ?>#process">The Process</a>
       <a href="<?php echo ccg_url(); ?>#work">Our work</a>
       <a href="<?php echo ccg_url( 'accessories' ); ?>"<?php echo ccg_current( 'accessories' ); ?>>Accessories</a>
       <a href="<?php echo ccg_url( 'contact' ); ?>"<?php echo ccg_current( 'contact' ); ?>>Contact</a>

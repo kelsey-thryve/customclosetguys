@@ -157,7 +157,7 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--gold); outl
 .todo { background: var(--gold); color: var(--ink); font-weight: 700; padding: 1px 6px; font-size: .86em; border-radius: 2px; }
 
 /* Steps */
-.steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px; }
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
 .step .num { width: 48px; height: 48px; border-radius: 50%; background: var(--gold); display: grid; place-items: center; font: 400 24px/1 var(--serif); color: var(--ink); }
 .step h3 { font-size: 21px; margin: 18px 0 10px; }
 .step p { font-size: 14px; color: var(--ink-2); }
@@ -313,3 +313,11 @@ section[id] { scroll-margin-top: 84px; }
 .more-work > summary::-webkit-details-marker { display: none; }
 .more-work[open] > summary { margin-bottom: 24px; }
 .more-work[open] > summary::after { content: " \2212"; }
+
+.site-footer .credit { display:block; width:100%; margin-top:10px; font-size:11px; opacity:.6; }
+.site-footer .credit a { color:inherit; }
+
+/* Dark hero on the contact page: white text, gold accents stay gold */
+.dark h1 { color: #fff; }
+.dark h1 em { font-style: normal; color: var(--gold); }
+.contact .lede, .contact dt, .contact label { color: #fff; }
