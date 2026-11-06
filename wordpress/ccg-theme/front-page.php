@@ -29,12 +29,14 @@ get_header(); ?>
       </div>
     </div>
 
-    <p class="kicker space-q">Step one: what are you designing?</p>
+    <div class="space-box">
+    <p class="kicker space-q">Step one</p><h3 class="space-h">What are you designing?</h3>
     <div class="space-pick">
       <a class="space-tile" href="<?php echo ccg_url( 'design' ); ?>?space=walkin#designer"><img src="<?php echo ccg_asset( 'img/work/walkin-island-skylight.jpg' ); ?>" alt="Walk-in closets" loading="lazy"><span class="st-body"><b>Walk-in closets</b><span>Drawer banks, shoe walls, hanging and islands</span><em>Start designing &rarr;</em></span></a>
       <a class="space-tile" href="<?php echo ccg_url( 'design' ); ?>?space=closet#designer"><img src="<?php echo ccg_asset( 'img/work/reach-in-lit.jpg' ); ?>" alt="Smaller closets" loading="lazy"><span class="st-body"><b>Smaller closets</b><span>Reach-in and single-wall closets</span><em>Start designing &rarr;</em></span></a>
       <a class="space-tile" href="<?php echo ccg_url( 'design' ); ?>?space=mudroom#designer"><img src="<?php echo ccg_asset( 'img/work/mudroom-pine-bench.jpg' ); ?>" alt="Mudrooms and entryways" loading="lazy"><span class="st-body"><b>Mudrooms and entryways</b><span>Benches, hooks, cubbies and shoe storage</span><em>Start designing &rarr;</em></span></a>
       <a class="space-tile" href="<?php echo ccg_url( 'design' ); ?>?space=garage#designer"><img src="<?php echo ccg_asset( 'img/garage-storage.jpg' ); ?>" alt="Garage spaces" loading="lazy"><span class="st-body"><b>Garage spaces</b><span>Slatwall, cabinets, workbenches and epoxy floors</span><em>Start designing &rarr;</em></span></a>
+    </div>
     </div>
 
   </div>
