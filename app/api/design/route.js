@@ -34,18 +34,22 @@ export async function POST(request) {
     const payload = {
       systemInstruction: { parts: [{ text: SYSTEM }] },
       contents,
-      generationConfig: { maxOutputTokens: 1024, temperature: 0.7 },
+      generationConfig: { maxOutputTokens: 2048, temperature: 0.7 },
     };
+    // Keep the model's thinking small so it can't eat the reply budget (that cut replies off mid-sentence).
+    const thinking = /gemini-2\.5/.test(MODEL) ? { thinkingBudget: 512 } : /gemini-[3-9]/.test(MODEL) ? { thinkingLevel: "low" } : null;
 
-    const r = await fetch(`${API_BASE}/${MODEL}:generateContent?key=${key}`, {
+    const call = (body) => fetch(`${API_BASE}/${MODEL}:generateContent?key=${key}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(body),
     });
-    const j = await r.json();
+    let r = await call(thinking ? { ...payload, generationConfig: { ...payload.generationConfig, thinkingConfig: thinking } } : payload);
+    let j = await r.json();
+    if (!r.ok && thinking && r.status === 400) { r = await call(payload); j = await r.json(); }
     if (!r.ok) return Response.json({ error: j?.error?.message || "Gemini error" }, { status: r.status });
 
-    const text = (j.candidates?.[0]?.content?.parts || []).map((p) => p.text).join("").trim();
+    const text = (j.candidates?.[0]?.content?.parts || []).filter((p) => !p.thought && p.text).map((p) => p.text).join("").trim();
     return Response.json({ text });
   } catch (e) {
     return Response.json({ error: String(e) }, { status: 500 });

@@ -132,7 +132,7 @@ export default function Page() {
   const photo = photos[0] || null;
   const [brief, setBrief] = useState("");
   const [picked, setPicked] = useState([]);
-  const [stage, setStage] = useState("intake"); // intake | design | quote | done
+  const [stage, setStage] = useState(client.spaces ? "choose" : "intake"); // choose | intake | design | quote | done
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [thinking, setThinking] = useState(false);
@@ -147,12 +147,14 @@ export default function Page() {
   const [ceiling, setCeiling] = useState(INCH ? {} : "");
   const [depth, setDepth] = useState(INCH ? {} : "");
   const [lead, setLead] = useState({ name: "", email: "", phone: "", suburb: "" });
-  const [space, setSpace] = useState("closet"); // closet | garage (clients with spaces only)
+  const [space, setSpace] = useState("closet"); // a client.spaces id (clients with spaces only)
   const [embed, setEmbed] = useState(false); // ?embed=1: inside another site's page, no header
   const fileRef = useRef(null);
   const rootRef = useRef(null);
-  const chips = client.chips[space] || client.chips.closet;
-  const garage = space === "garage";
+  const spaceInfo = client.spaces ? client.spaces.find((x) => x.id === space) : null;
+  const kind = space === "garage" ? "garage" : space === "mudroom" ? "mudroom" : "closet";
+  const chips = client.chips[kind] || client.chips.closet;
+  const garage = kind === "garage";
 
   // Embedded: drop the header and tell the host page our height so its frame fits.
   useEffect(() => {
@@ -170,12 +172,22 @@ export default function Page() {
     return () => ro.disconnect();
   }, []);
 
+  // First step: what are you designing? Walk-ins start in walk-in mode; the rest are one wall.
   const pickSpace = (id) => {
-    if (id === space) return;
+    const sp = client.spaces?.find((x) => x.id === id);
+    if (!sp) return;
+    if (id !== space) setPicked([]);
     setSpace(id);
-    setPicked([]);
-    setWallChoice(id === "garage" ? false : null);
+    setWallChoice(!!sp.walkIn);
+    setStage("intake");
   };
+
+  // ?space=walkin (from the website's "What are you designing?" cards) skips the first step.
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get("space");
+    if (id && client.spaces?.some((x) => x.id === id)) pickSpace(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Shrink a photo to a JPEG data URL so several fit in one request.
   const compress = (f) =>
@@ -363,7 +375,7 @@ export default function Page() {
     setGuide(null);
     setThinking(true);
     runRender(); // fire the images in parallel
-    const opener = [{ role: "user", content: `Here is my brief: ${fullBrief()}. ${photos.length > 1 ? `The ${photos.length} attached photos show the actual space this ${garage ? "garage storage" : client.id === "thryve" ? "wardrobe" : "closet"} will be fitted into; the first is the main view.` : `The attached photo is the actual space this ${garage ? "garage storage" : client.id === "thryve" ? "wardrobe" : "closet"} will be fitted into.`}` }];
+    const opener = [{ role: "user", content: `Here is my brief: ${fullBrief()}. ${photos.length > 1 ? `The ${photos.length} attached photos show the actual space this ${garage ? "garage storage" : kind === "mudroom" ? "mudroom storage" : client.id === "thryve" ? "wardrobe" : "closet"} will be fitted into; the first is the main view.` : `The attached photo is the actual space this ${garage ? "garage storage" : kind === "mudroom" ? "mudroom storage" : client.id === "thryve" ? "wardrobe" : "closet"} will be fitted into.`}` }];
     const reply = await askDesigner(opener);
     setMessages([{ role: "assistant", content: reply }]);
     setThinking(false);
@@ -390,7 +402,7 @@ export default function Page() {
     await fetch("/api/lead", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...lead, space, spec: [...picked, ...(brief.trim() ? [brief.trim()] : [])], notes: [picked.join(", "), brief.trim(), measurements(true)].filter(Boolean).join(". ") }),
+      body: JSON.stringify({ ...lead, space: spaceInfo ? spaceInfo.label : space, spec: [...picked, ...(brief.trim() ? [brief.trim()] : [])], notes: [picked.join(", "), brief.trim(), measurements(true)].filter(Boolean).join(". ") }),
     });
     setStage("done");
   };
@@ -414,12 +426,26 @@ export default function Page() {
           </div>
         )}
 
-        {stage === "intake" && client.spaces && (
-          <div className="spaces" role="group" aria-label="Which space?">
-            <span className="spaces-lbl">Which space?</span>
-            {client.spaces.map((sp) => (
-              <button key={sp.id} className={"vtab" + (space === sp.id ? " on" : "")} aria-pressed={space === sp.id} onClick={() => pickSpace(sp.id)}>{sp.label}</button>
-            ))}
+        {stage === "choose" && (
+          <div className="panel choose-space">
+            <div className="stepnum">Step one</div>
+            <div className="steph">What are you designing?</div>
+            <div className="space-cards">
+              {client.spaces.map((sp) => (
+                <button key={sp.id} className="space-card" onClick={() => pickSpace(sp.id)}>
+                  <img src={sp.img} alt="" loading="lazy" />
+                  <span className="sc-body"><span className="sc-name">{sp.label}</span><span className="sc-blurb">{sp.blurb}</span><span className="sc-go">Start designing →</span></span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {stage === "intake" && spaceInfo && (
+          <div className="space-chosen">
+            <img src={spaceInfo.img} alt="" />
+            <span>Designing: <b>{spaceInfo.label}</b></span>
+            <button className="link" onClick={() => setStage("choose")}>Change</button>
           </div>
         )}
 
@@ -432,7 +458,7 @@ export default function Page() {
                 {photo ? <img src={photo} alt="Your space" /> : (
                   <>
                     <div className="ico">+</div>
-                    <div>{garage ? "Tap to upload a photo of your garage" : "Tap to upload a photo of your wall, alcove or closet"}</div>
+                    <div>{garage ? "Tap to upload a photo of your garage" : kind === "mudroom" ? "Tap to upload a photo of your mudroom or entryway wall" : space === "walkin" ? "Tap to upload a photo of your walk-in, taken from the doorway" : "Tap to upload a photo of your wall, alcove or closet"}</div>
                     <div style={{ fontSize: 12 }}>Add a few angles if you can</div>
                   </>
                 )}
@@ -454,7 +480,7 @@ export default function Page() {
               <p className="footnote" style={{ textAlign: "left", marginTop: 8 }}>
                 Add up to {MAX_PHOTOS} photos from different angles. The main photo is the view we design on; tap another photo to make it the main one.
               </p>
-              {photos.length > 0 && !garage && (
+              {photos.length > 0 && kind === "closet" && (
                 <label className="wallmode">
                   <input type="checkbox" checked={walkIn} onChange={(e) => setWallChoice(e.target.checked)} />
                   <span>It's a walk-in: my main photo shows the whole room from the doorway. Show me the room fitted out, each wall face-on, and a to-scale plan. Extra photos can be close-ups.</span>
@@ -496,7 +522,7 @@ export default function Page() {
               <textarea
                 value={brief}
                 onChange={(e) => setBrief(e.target.value)}
-                placeholder={client.briefPlaceholder[space] || client.briefPlaceholder.closet}
+                placeholder={client.briefPlaceholder[kind] || client.briefPlaceholder.closet}
               />
               <button className="cta" disabled={!photo || !fullBrief()} onClick={startDesign}>Generate my design</button>
             </div>

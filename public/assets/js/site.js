@@ -155,6 +155,8 @@
     try {
       var dUrl = new URL(window.CCG_DESIGNER_URL, location.href);
       dUrl.searchParams.set('embed', '1');
+      var wantSpace = new URLSearchParams(location.search).get('space');
+      if (wantSpace) dUrl.searchParams.set('space', wantSpace);
       var frame = document.createElement('iframe');
       frame.src = dUrl.toString();
       frame.title = 'Closet designer';

@@ -62,11 +62,11 @@ def convert(html, page):
     # The designer URL comes from the WordPress settings (inline script), not the static config file.
     main = re.sub(r'\s*<script src="assets/js/config.js"></script>', "", main)
 
-    # Links between pages (with optional #anchor).
+    # Links between pages (with optional ?query and #anchor).
     def link(m):
-        f, anchor = m.group(1), m.group(2) or ""
-        return 'href="<?php echo ccg_url( \'%s\' ); ?>%s"' % (SLUG[f], anchor)
-    main = re.sub(r'href="(%s)(#[\w-]+)?"' % "|".join(re.escape(p) for p in PAGES), link, main)
+        f, query, anchor = m.group(1), m.group(2) or "", m.group(3) or ""
+        return 'href="<?php echo ccg_url( \'%s\' ); ?>%s%s"' % (SLUG[f], query, anchor)
+    main = re.sub(r'href="(%s)(\?[\w=&-]+)?(#[\w-]+)?"' % "|".join(re.escape(p) for p in PAGES), link, main)
 
     # Asset paths.
     main = re.sub(r'(src|href)="assets/([^"]+)"', lambda m: '%s="<?php echo ccg_asset( \'%s\' ); ?>"' % (m.group(1), m.group(2)), main)

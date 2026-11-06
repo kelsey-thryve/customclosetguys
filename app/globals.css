@@ -175,3 +175,25 @@ input.field { width:100%; border:1px solid var(--line); background:#FBF8F2; bord
 .dim .unitbox { position:relative; display:inline-flex; flex:none; }
 .dim .unitbox input { width:64px; padding-right:24px; }
 .dim .unitbox em { position:absolute; right:8px; top:50%; transform:translateY(-50%); font-style:normal; font-size:12px; color:var(--muted, #8a8172); pointer-events:none; }
+
+/* Step one: "What are you designing?" (large image cards). */
+.choose-space .steph { margin-bottom:18px; }
+.space-cards { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:14px; }
+.space-card { display:flex; flex-direction:column; text-align:left; padding:0; border:1px solid var(--line); background:var(--card);
+  border-radius:3px; overflow:hidden; cursor:pointer; font:inherit; color:var(--ink); transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.space-card img { width:100%; aspect-ratio:3/4; object-fit:cover; display:block; transition:transform .5s ease; }
+.space-card:hover { transform:translateY(-3px); box-shadow:0 14px 30px rgba(0,0,0,.12); border-color:var(--brass); }
+.space-card:hover img { transform:scale(1.04); }
+.space-card:focus-visible { outline:2px solid var(--brass); outline-offset:2px; }
+.sc-body { display:flex; flex-direction:column; gap:4px; padding:14px 14px 16px; position:relative; background:var(--card); }
+.sc-name { font-size:17px; font-weight:600; }
+.sc-blurb { font-size:13px; color:var(--muted); line-height:1.4; }
+.sc-go { font-size:13px; font-weight:600; margin-top:6px; }
+.wrap[data-client="ccg"] .sc-name { font-family:'Gloock', Georgia, serif; font-weight:400; font-size:19px; }
+.wrap[data-client="ccg"] .sc-go { border-bottom:2px solid var(--brass); align-self:flex-start; }
+@media (max-width:900px) { .space-cards { grid-template-columns:repeat(2, minmax(0,1fr)); } }
+@media (max-width:420px) { .space-cards { gap:10px; } .sc-body { padding:10px 10px 12px; } .sc-name { font-size:15px; } .wrap[data-client="ccg"] .sc-name { font-size:16px; } .sc-blurb { font-size:12px; } }
+.space-chosen { display:flex; align-items:center; gap:12px; margin:0 0 14px; padding:8px; border:1px solid var(--line); background:var(--card); border-radius:3px; font-size:14px; }
+.space-chosen img { width:56px; height:56px; object-fit:cover; border-radius:2px; }
+.space-chosen span { flex:1; }
+.link { background:none; border:none; padding:0; font:inherit; font-size:14px; font-weight:600; color:var(--ink); cursor:pointer; border-bottom:2px solid var(--brass); }
