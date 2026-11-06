@@ -197,3 +197,10 @@ input.field { width:100%; border:1px solid var(--line); background:#FBF8F2; bord
 .space-chosen img { width:56px; height:56px; object-fit:cover; border-radius:2px; }
 .space-chosen span { flex:1; }
 .link { background:none; border:none; padding:0; font:inherit; font-size:14px; font-weight:600; color:var(--ink); cursor:pointer; border-bottom:2px solid var(--brass); }
+
+/* Garage reference points */
+.gfacts { display:flex; flex-direction:column; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid var(--line); }
+.gq .lbl { margin:0 0 6px; }
+.gq .chips { margin:0; }
+.gq input.field { width:100%; box-sizing:border-box; }
+.wrap[data-client="ccg"] .chip.on { background:var(--brand); color:#fff; border-color:var(--brand); }

@@ -146,6 +146,12 @@ export default function Page() {
   const [widths, setWidths] = useState({}); // wall widths: "main", or "left" / "back" / "right"
   const [ceiling, setCeiling] = useState(INCH ? {} : "");
   const [depth, setDepth] = useState(INCH ? {} : "");
+  // Garage reference points.
+  const [bays, setBays] = useState(""); // "0", "1", "2", "3+"
+  const [parking, setParking] = useState(""); // "yes" / "no"
+  const [fitWalls, setFitWalls] = useState([]); // "Back wall", "Left wall", "Right wall"
+  const [obstacles, setObstacles] = useState([]); // doors, windows, outlets... to work around
+  const [obstacleNote, setObstacleNote] = useState("");
   const [lead, setLead] = useState({ name: "", email: "", phone: "", suburb: "" });
   const [space, setSpace] = useState("closet"); // a client.spaces id (clients with spaces only)
   const [embed, setEmbed] = useState(false); // ?embed=1: inside another site's page, no header
@@ -237,8 +243,19 @@ export default function Page() {
   const dims = () => ({
     widths: (walkIn ? WALL_KEYS : ["main"]).map((k) => lenMm(widths[k])),
     ceiling: lenMm(ceiling),
-    depth: walkIn ? lenMm(depth) : null,
+    depth: walkIn || garage ? lenMm(depth) : null,
   });
+
+  const toggleIn = (setter) => (v) => setter((xs) => (xs.includes(v) ? xs.filter((x) => x !== v) : [...xs, v]));
+  const garageFacts = () => {
+    if (!garage) return "";
+    const f = [];
+    if (bays) f.push(bays === "0" ? "no car bays" : `${bays}-car garage`);
+    if (parking) f.push(parking === "yes" ? "cars still park inside, so keep the parking space clear" : "no cars park inside, so the floor space can be used");
+    if (fitWalls.length) f.push(`fit out only the ${fitWalls.map((w) => w.toLowerCase()).join(", ")}`);
+    if (obstacles.length || obstacleNote.trim()) f.push(`work around: ${[...obstacles.map((o) => o.toLowerCase()), obstacleNote.trim()].filter(Boolean).join(", ")}`);
+    return f.length ? `Garage: ${f.join("; ")}` : "";
+  };
 
   // The AI works in mm; `shown` gives the same sentence in the client's units for the lead email.
   const measurements = (shown = false) => {
@@ -247,7 +264,7 @@ export default function Page() {
     const walls = walkIn
       ? d.widths.map((w, i) => (w ? `${WALL_NAMES[i].toLowerCase()} is ${L(w)} wide` : null)).filter(Boolean)
       : d.widths[0] ? [`the wall is ${L(d.widths[0])} wide`] : [];
-    const all = [...walls, d.ceiling && `ceiling height ${L(d.ceiling)}`, d.depth && `room depth ${L(d.depth)}`].filter(Boolean);
+    const all = [...walls, d.ceiling && `ceiling height ${L(d.ceiling)}`, d.depth && (garage ? `garage depth (garage door to back wall) ${L(d.depth)}` : `room depth ${L(d.depth)}`)].filter(Boolean);
     return all.length ? `Measurements: ${all.join(", ")}` : "";
   };
 
@@ -256,6 +273,7 @@ export default function Page() {
     if (picked.length) parts.push(picked.join(", "));
     if (brief.trim()) parts.push(brief.trim());
     if (measurements()) parts.push(measurements());
+    if (garageFacts()) parts.push(garageFacts());
     return parts.join(". ");
   };
 
@@ -402,7 +420,7 @@ export default function Page() {
     await fetch("/api/lead", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...lead, space: spaceInfo ? spaceInfo.label : space, spec: [...picked, ...(brief.trim() ? [brief.trim()] : [])], notes: [picked.join(", "), brief.trim(), measurements(true)].filter(Boolean).join(". ") }),
+      body: JSON.stringify({ ...lead, space: spaceInfo ? spaceInfo.label : space, spec: [...picked, ...(brief.trim() ? [brief.trim()] : [])], notes: [picked.join(", "), brief.trim(), measurements(true), garageFacts()].filter(Boolean).join(". ") }),
     });
     setStage("done");
   };
@@ -459,7 +477,7 @@ export default function Page() {
                   <>
                     <div className="ico">+</div>
                     <div>{garage ? "Tap to upload a photo of your garage" : kind === "mudroom" ? "Tap to upload a photo of your mudroom or entryway wall" : space === "walkin" ? "Tap to upload a photo of your walk-in, taken from the doorway" : "Tap to upload a photo of your wall, alcove or closet"}</div>
-                    <div style={{ fontSize: 12 }}>Add a few angles if you can</div>
+                    <div style={{ fontSize: 12 }}>{garage ? "Best: one photo of each wall you want fitted out" : "Add a few angles if you can"}</div>
                   </>
                 )}
               </div>
@@ -499,12 +517,49 @@ export default function Page() {
                     <span>Ceiling height</span>
                     <LenInput label="Ceiling height" hint={DIM_HINT.ceiling} value={ceiling} onChange={setCeiling} />
                   </label>
-                  {walkIn && (
+                  {(walkIn || garage) && (
                     <label className="dim">
-                      <span>Room depth (door to back wall)</span>
-                      <LenInput label="Room depth" hint={DIM_HINT.depth} value={depth} onChange={setDepth} />
+                      <span>{garage ? "Garage depth (garage door to back wall)" : "Room depth (door to back wall)"}</span>
+                      <LenInput label={garage ? "Garage depth" : "Room depth"} hint={garage ? (INCH ? ["20", "0"] : "e.g. 6000") : DIM_HINT.depth} value={depth} onChange={setDepth} />
                     </label>
                   )}
+                </div>
+              )}
+              {photos.length > 0 && garage && (
+                <div className="gfacts">
+                  <div className="gq">
+                    <p className="lbl">How many car bays?</p>
+                    <div className="chips">
+                      {["1", "2", "3+"].map((b) => (
+                        <button key={b} className={"chip" + (bays === b ? " on" : "")} onClick={() => setBays(bays === b ? "" : b)}>{b === "3+" ? "3 or more" : `${b} car`}</button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="gq">
+                    <p className="lbl">Do you still park in there?</p>
+                    <div className="chips">
+                      {[["yes", "Yes, keep room to park"], ["no", "No, use the floor space"]].map(([v, l]) => (
+                        <button key={v} className={"chip" + (parking === v ? " on" : "")} onClick={() => setParking(parking === v ? "" : v)}>{l}</button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="gq">
+                    <p className="lbl">Which walls should we fit out?</p>
+                    <div className="chips">
+                      {["Back wall", "Left wall", "Right wall"].map((w) => (
+                        <button key={w} className={"chip" + (fitWalls.includes(w) ? " on" : "")} onClick={() => toggleIn(setFitWalls)(w)}>{w}</button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="gq">
+                    <p className="lbl">Anything on those walls we need to work around?</p>
+                    <div className="chips">
+                      {["Side door", "Steps into the house", "Window", "Power outlets", "Water heater", "Breaker panel"].map((o) => (
+                        <button key={o} className={"chip" + (obstacles.includes(o) ? " on" : "")} onClick={() => toggleIn(setObstacles)(o)}>{o}</button>
+                      ))}
+                    </div>
+                    <input className="field" style={{ marginTop: 8 }} value={obstacleNote} onChange={(e) => setObstacleNote(e.target.value)} placeholder="Where they are, e.g. water heater in the back left corner" />
+                  </div>
                 </div>
               )}
               <input ref={fileRef} type="file" accept="image/*" multiple onChange={onFile} style={{ display: "none" }} />
