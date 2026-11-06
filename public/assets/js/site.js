@@ -160,12 +160,12 @@
       var frame = document.createElement('iframe');
       frame.src = dUrl.toString();
       frame.title = 'Closet designer';
-      frame.style.cssText = 'display:block;width:100%;height:1100px;border:0;background:transparent';
+      frame.style.cssText = 'display:block;width:100%;height:800px;border:0;background:transparent';
       slot.innerHTML = '';
       slot.appendChild(frame);
       window.addEventListener('message', function (e) {
         if (e.origin === dUrl.origin && e.data && e.data.type === 'designer-height') {
-          frame.style.height = Math.max(600, Number(e.data.height) || 0) + 'px';
+          frame.style.height = Math.max(320, Number(e.data.height) || 0) + 'px';
         }
       });
     } catch (err) { /* bad URL: keep the concept preview */ }
